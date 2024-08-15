@@ -10,13 +10,18 @@ celery.conf.result_backend = Utils.CELERY_RESULT_BACKEND
 class Worker(Task):
         
     @celery.task(bind=True)
-    def new_request(self, userId: str, testing: bool = False) -> None:
+    def new_request(self, userId: str, testing: bool = False) -> {}:
         
-        if(not testing):
+        try:
             self.update_state(state="PROCESSING", meta={"progress": 0})
+        except:
+            pass
         
         api = OpenWeatherAPI()
-        cities = Utils.CITY_IDS
+        if(testing):
+            cities = Utils.CITY_IDS_TEST
+        else:
+            cities = Utils.CITY_IDS
         time = datetime.now()
         data = {
             "userId": userId,
@@ -43,10 +48,14 @@ class Worker(Task):
                 "humidity": humidity
             })
             
-            if(not testing):
+            try:
                 self.update_state(state="PROCESSING", meta={"progress": ((idx+1)/len(cities))*100})
-        
-        if(not testing):
+            except:
+                pass
+            
+        try:
             self.update_state(state="PROCESSING", meta={"progress": 99})
-        
+        except:
+            pass
+                
         return {"result": "Task is done!", "progress": 100, "data": data}

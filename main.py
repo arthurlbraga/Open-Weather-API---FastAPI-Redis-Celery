@@ -27,8 +27,8 @@ async def new_user(data=Body(...)):
             task = worker.new_request.delay(userId, True)
         else:
             task = worker.new_request.delay(userId, False)
-            tasks[userId] = task.id
-            
+        
+        tasks[userId] = task.id
         return {"INFO": f"New request created with TaskID = {task.id}"}
     else:
         return {"INFO": "A request was already created for this User ID"}

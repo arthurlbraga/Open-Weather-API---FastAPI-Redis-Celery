@@ -28,7 +28,8 @@ class TestFastAPI(unittest.TestCase):
     
     def test_3_newRequest(self):
         payload = {
-            "userId": self.USERID
+            "userId": self.USERID,
+            "testing": True
         }
         response = self.client.post("/", json=payload)
         json_response = response.json()["INFO"]
@@ -40,7 +41,6 @@ class TestFastAPI(unittest.TestCase):
         json_response = response.json()["INFO"]
         pattern = r"The request for this user is being processed\. Status = \d+%"
         self.assertRegex(json_response, pattern)
-        sleep(10)
         response = self.client.get(f"/{self.USERID}")
         json_response = response.json()["INFO"]
         pattern = r"Status = \d+%"

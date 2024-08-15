@@ -7,8 +7,8 @@
 2. Run the following command to build the docker images and start the containers:
 `docker compose up --build`
 
-3. On the command prompt, use cURL or equivalent to send a POST request to the API:
-`curl -i -X POST -H "Content-Type: application/json" -d "{"userId":"test"}" http://localhost:8000/`
+3. On the command prompt, use cURL or equivalent to send a POST request to the API (depending on your OS, you may need to escape the double-quotes in the json payload):
+`curl -i -X POST -H "Content-Type: application/json" -d "{"userId":"<userId>"}" http://localhost:8000/`
 
 4. Track user requests progress on `http://localhost:8000/<userId>`
 
@@ -16,7 +16,7 @@
 
 6. Review the test coverage: `docker exec frontend coverage report`
 # Test Coverage
-[![Test-Coverage.png](https://i.postimg.cc/PfVPgcJD/Test-Coverage.png)](https://postimg.cc/Lhf9fxz4)
+[![Test-Coverage.png](https://i.postimg.cc/TYxVt17w/Test-Coverage.png)](https://postimg.cc/F1PkRrQ5)
 
 # Resources used
 ### requests - https://pypi.org/project/requests/
@@ -29,7 +29,7 @@ Used to restore environment variables, as sensistive information, such as the ap
 This is used to handle asynchronous tasks and background jobs, allowing the application to perform long-running operations without blocking the main process. This way, users can still make new requests to the API without the need to wait synchronously the answer.
 ### uvicorn - https://www.uvicorn.org/
 This is an ASGI (Asynchronous Server Gateway Interface) server used to run the main Python web server.
-### httpx
+### httpx - https://www.python-httpx.org/
 This library is needed to run the unit test modules.
-### coverage
+### coverage - https://coverage.readthedocs.io/en/7.6.1/
 This library is used to run the unit tests and to calculate the coverage percentage of unit tests in this application.

@@ -2,6 +2,7 @@ from OpenWeatherAPI import OpenWeatherAPI
 from celery import Celery, Task
 from Utils import Utils
 from datetime import datetime
+import json
 
 celery = Celery("Request")
 celery.conf.broker_url = Utils.CELERY_BROKER_URL
@@ -10,7 +11,7 @@ celery.conf.result_backend = Utils.CELERY_RESULT_BACKEND
 class Worker(Task):
         
     @celery.task(bind=True)
-    def new_request(self, userId: str, testing: bool = False) -> {}:
+    def new_request(self, userId: str, testing: bool = False) -> json:
         
         try:
             self.update_state(state="PROCESSING", meta={"progress": 0})

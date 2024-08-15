@@ -26,10 +26,10 @@ def new_request(self, userId: str) -> None:
         weather = api.get_current_weather(city)
         
         # In case city does not exist
-        if(weather == 404):
+        if(type(weather) == int and weather == 404):
             print(f"City with ID: {city} was not found. Skiping it.")
             continue
-        elif(weather >= 500):
+        elif(type(weather) == int and weather >= 500):
             print(f"Something is wrong with OpenWeather servers. Error returned: {weather}. Trying to skip this city")
             continue
             

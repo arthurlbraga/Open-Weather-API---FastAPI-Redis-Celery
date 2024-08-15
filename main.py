@@ -45,10 +45,8 @@ async def index():
 async def new_user(data=Body(...)):
     userId = str(data["userId"])
     if(userId not in tasks):
-        for i in range(10):
-            userId = userId + str(i)
-            task = new_request.delay(userId)
-            tasks[userId] = task.id
+        task = new_request.delay(userId)
+        tasks[userId] = task.id
         return {"INFO": f"New request created with TaskID = {task.id}"}
     else:
         return {"INFO": "A request was already created for this User ID"}

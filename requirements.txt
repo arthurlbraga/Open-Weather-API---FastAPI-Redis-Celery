@@ -1,0 +1,5 @@
+requests
+fastapi
+python-dotenv
+uvicorn
+celery[redis]

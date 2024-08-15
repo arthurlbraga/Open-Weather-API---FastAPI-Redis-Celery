@@ -4,4 +4,3 @@ Include/
 Lib/
 Scripts/
 pyvenv.cfg
-.env

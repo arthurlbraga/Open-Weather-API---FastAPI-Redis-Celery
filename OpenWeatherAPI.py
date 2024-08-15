@@ -5,6 +5,7 @@ import requests
 from time import sleep
 
 class OpenWeatherAPI:
+    
     def __init__(self) -> None:
         config = dotenv_values(".env")
         self.api_key = config.get('API_KEY')
@@ -22,11 +23,8 @@ class OpenWeatherAPI:
                 success = True
             elif(r.status_code == 429): # Rate Limit
                 print("ERROR: Rate limit. Trying again in 10 seconds")
-                print(r.json())
                 sleep(10)
-            elif(r.status_code == 404): # City not found
-                break
-            elif(r.status_code >= 500): # Error in OpenWeather servers
+            elif(r.status_code == 404 or r.status_code >= 500): # City not found OR Error in OpenWeather servers
                 break
             else:
                 print(r.json())

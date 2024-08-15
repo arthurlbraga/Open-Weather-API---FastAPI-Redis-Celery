@@ -17,19 +17,19 @@ services:
   celery:
     container_name: "celery"
     build: .
-    command: celery -A celery_worker worker --loglevel=INFO
+    command: celery -A Worker worker --loglevel=INFO
     volumes:
       - .:/app
     depends_on:
       - web
       - redis
 
-  # redis-commander:
-  #   container_name: "redis-commander"
-  #   image: rediscommander/redis-commander
-  #   environment:
-  #     - REDIS_HOSTS=local:redis:6379
-  #   ports:
-  #     - 8081:8081
-  #   depends_on:
-  #     - redis
+  redis-commander:
+    container_name: "redis-commander"
+    image: rediscommander/redis-commander
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - 8081:8081
+    depends_on:
+      - redis

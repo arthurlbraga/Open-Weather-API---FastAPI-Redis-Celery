@@ -1,0 +1,35 @@
+services:
+  web:
+    container_name: "frontend"
+    build: .
+    command: sh -c "uvicorn main:app --reload --port=8000 --host=0.0.0.0"
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+  
+  redis:
+    container_name: "redis"
+    image: redis:7.4.0-bookworm
+    ports:
+      - 6379:6379
+
+  celery:
+    container_name: "celery"
+    build: .
+    command: celery -A celery_worker worker --loglevel=INFO
+    volumes:
+      - .:/app
+    depends_on:
+      - web
+      - redis
+
+  # redis-commander:
+  #   container_name: "redis-commander"
+  #   image: rediscommander/redis-commander
+  #   environment:
+  #     - REDIS_HOSTS=local:redis:6379
+  #   ports:
+  #     - 8081:8081
+  #   depends_on:
+  #     - redis
